@@ -19,7 +19,15 @@ public extension SyncHTTP {
         head: [(name:String,value:String)] = [],
         body:Data = Data()) throws -> (status:Int, body:Data)
     {
-        guard let u = URL(string: address) else { throw Issue.badAddress }
+        func makeQueryPart() -> String {
+            guard !query.isEmpty else { return "" }
+            var comps = URLComponents()
+            comps.queryItems = query
+            let q = comps.percentEncodedQuery ?? ""
+            return "?\(q)"
+        }
+        let q = makeQueryPart()
+        guard let u = URL(string: "\(address)\(q)") else { throw Issue.badAddress }
         var req = URLRequest(
             url: u,
             cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,

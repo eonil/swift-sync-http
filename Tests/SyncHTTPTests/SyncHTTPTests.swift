@@ -3,7 +3,13 @@ import XCTest
 
 final class SyncHTTPTests: XCTestCase {
     func test1() throws {
-        let (status,body) = try SyncHTTP.call(method: "GET", address: "https://google.com")
+        let (status,body) = try SyncHTTP.call(
+            method: "GET",
+            address: "https://google.com",
+            query: [
+                URLQueryItem(name: "q", value: "xxx"),
+                URLQueryItem(name: "z", value: "1111"),
+            ])
         XCTAssertEqual(status, 200)
         XCTAssertTrue(body.count > 0)
     }

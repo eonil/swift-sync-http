@@ -30,7 +30,7 @@ Getting Started
 -------------------
 Add Swift package.
 
-    .package(url: "https://github.com/eonil/swift-sync-http", from: "0.0.2"),
+    .package(url: "https://github.com/eonil/swift-sync-http", from: "0.0.3"),
 
 
 Import.
