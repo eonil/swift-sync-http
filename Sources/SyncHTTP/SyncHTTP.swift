@@ -16,7 +16,7 @@ public extension SyncHTTP {
         method:String,
         address:String,
         query: [URLQueryItem] = [],
-        headers: [(name:String,value:String)] = [],
+        head: [(name:String,value:String)] = [],
         body:Data = Data()) throws -> (status:Int, body:Data)
     {
         guard let u = URL(string: address) else { throw Issue.badAddress }
@@ -25,7 +25,7 @@ public extension SyncHTTP {
             cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
             timeoutInterval: 10)
         req.httpMethod = method
-        for (n,v) in headers {
+        for (n,v) in head {
             req.addValue(v, forHTTPHeaderField: n)
         }
         var reply = Data()
@@ -54,8 +54,14 @@ public extension SyncHTTP {
     ///     This does not consider HTTP status into success/failure.
     ///     Returning result can be non 2xx status.
     static func get(address:String) throws -> String {
+//        let head = [
+//            (name:"Accept", value: "text/*;charset=UTF-8"),
+//            (name:"Accept-Charset", value: "utf-8"),
+//        ]
         let reply = try call(method: "GET", address: address, body: Data()).body
-        return String(data: reply, encoding: .utf8) ?? ""
+        return String(data: reply, encoding: .utf8)
+            ?? String(data: reply, encoding: .ascii)
+            ?? ""
     }
     /// Convenient method to perform POST string request simply.
     /// - Parameter query:
@@ -66,6 +72,9 @@ public extension SyncHTTP {
     ///     This does not consider HTTP status into success/failure.
     ///     Returning result can be non 2xx status.
     static func post(address:String, body:String) throws {
+//        let head = [
+//            (name:"Content-Type", value: "text/plain; charset=UTF-8"),
+//        ]
         try call(method: "POST", address: address, body: body.data(using: .utf8) ?? Data())
     }
 }
