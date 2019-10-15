@@ -2,6 +2,8 @@ SyncHTTP
 =========
 Eonil, 2019.
 
+[![Build Status](https://api.travis-ci.org/eonil/swift-sync-http.svg)](https://travis-ci.org/eonil/swift-sync-http)
+
 Performs several HTTP calls synchronously in most reliable way.
 
 - There are small needs for synchronous HTTP calls in Swift.
