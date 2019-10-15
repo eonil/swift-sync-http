@@ -40,7 +40,7 @@ Import.
 And use.
     
     let reply = try SyncHTTP.get(address: "https://google.com")
-    FileHandle.standardOutput.write(reply)
+    print(reply)
 
 
 License & Credits
